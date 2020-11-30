@@ -2,12 +2,19 @@ version: "2"
 services:
   postgres:
     image: postgres:13.0-alpine
+    #Specify values in .env file
     environment:
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       POSTGRES_DB: $POSTGRES_DB
     restart: always
+    #Make database available by mapping the Port out of the Dockernet
     ports:
       - '5432:5432'
+    #You an either comment the follwing 2 lines so no data will be 
+    #mapped outside the container and as a result lost with deleting
+    #or make the sql data consistent on host by specifing a dir 
+    #in the .env file for the 
+    #postgres volume
     volumes:
       - $HOST_DB_DIR:/var/lib/postgres/data
